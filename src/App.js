@@ -15,7 +15,6 @@ function App() {
         attaindee.
       </p>
       <Inputs />
-      <Results />
     </div>
   );
 }
