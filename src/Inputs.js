@@ -15,11 +15,11 @@ const inputfields = css`
 `;
 
 /* Set the base url of the api */
-const baseUrl = '';
+const baseUrl = 'http://localhost:5000';
 
 export default function Inputs() {
   /* Declare all state variables and usestates */
-  const [allGuests, setAllGuests] = useState({});
+  const [allData, setAllData] = useState();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
@@ -27,54 +27,81 @@ export default function Inputs() {
   useEffect(() => {
     const getData = async () => {
       const response = await fetch(`${baseUrl}/`);
-      const allData = await response.json();
-      setAllGuests(allData);
+      const allGuests = await response.json();
+      setAllData(allGuests);
     };
     getData();
   }, []);
 
-  return (
-    <div css={inputfields}>
-      <label>
-        First name:
-        <input
-          value={firstName}
-          onChange={(event) => setFirstName(event.currentTarget.value)}
-        />
-      </label>
-      <label>
-        Last name:
-        <input
-          value={lastName}
-          onChange={(event) => setLastName(event.currentTarget.value)}
-        />
-      </label>
-      <button>Attend</button>
-      <div>
-        Here are the results in a table.
-        <table>
-          <tr>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Attending</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          <tr>
-            <td>Alfred</td>
-            <td>Ungerböck</td>
-            <td>
-              <input type="checkbox" />
-            </td>
-            <td>
-              <button>Edit</button>
-            </td>
-            <td>
-              <button>Delete</button>
-            </td>
-          </tr>
-        </table>
+  // Push new guest
+  function handleSubmit(e) {
+    e.preventDefault();
+    const pushData = async () => {
+      const response = await fetch(`${baseUrl}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ firstName: firstName, lastName: lastName }),
+      });
+      const createdGuest = await response.json();
+      console.log(createdGuest);
+      setFirstName('');
+      setLastName('');
+    };
+    pushData();
+  }
+
+  if (!allData) {
+    return <div>loading</div>;
+  } else {
+    return (
+      <div css={inputfields}>
+        <form onSubmit={handleSubmit}>
+          <label>
+            First name:
+            <input
+              value={firstName}
+              onChange={(event) => setFirstName(event.currentTarget.value)}
+            />
+          </label>
+          <label>
+            Last name:
+            <input
+              value={lastName}
+              onChange={(event) => setLastName(event.currentTarget.value)}
+            />
+          </label>
+          <button>Attend</button>
+        </form>
+        <div>
+          Here are the results in an unordered list.
+          <table>
+            <tbody>
+              <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Attending</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+              <tr>
+                <td>Alfred</td>
+                <td>Ungerböck</td>
+                <td>
+                  <input type="checkbox" />
+                </td>
+                <td>
+                  <button>Edit</button>
+                </td>
+                <td>
+                  <button>Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }

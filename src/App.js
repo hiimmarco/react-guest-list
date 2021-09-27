@@ -2,7 +2,6 @@ import './App.css';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import Inputs from './Inputs';
-import Results from './Results';
 
 function App() {
   return (

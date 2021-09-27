@@ -16,10 +16,10 @@ export default function Results() {
           <td>Alfred</td>
           <td>Ungerböck</td>
           <td>
-            <input type="checkbox"></input>
+            <input type="checkbox" />
           </td>
           <td>
-            <button></button>
+            <button />
           </td>
         </tr>
       </table>
