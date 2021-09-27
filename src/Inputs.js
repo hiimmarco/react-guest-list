@@ -22,6 +22,8 @@ export default function Inputs() {
   const [allData, setAllData] = useState();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [newUser, setNewUser] = useState('');
+  const [deletedGuest, setDeletedGuest] = useState('');
 
   // Fetch all data
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function Inputs() {
       setAllData(allGuests);
     };
     getData();
-  }, []);
+  }, [newUser, deletedGuest]);
 
   // Push new guest
   function handleSubmit(e) {
@@ -45,11 +47,19 @@ export default function Inputs() {
         body: JSON.stringify({ firstName: firstName, lastName: lastName }),
       });
       const createdGuest = await response.json();
-      console.log(createdGuest);
       setFirstName('');
       setLastName('');
+      setNewUser(createdGuest);
     };
     pushData();
+  }
+
+  function handleDelete(id) {
+    const deleteData = async () => {
+      const response = await fetch(`${baseUrl}/${id}`, { method: 'DELETE' });
+      const deletedGuest = await response.json();
+      setDeletedGuest(deletedGuest);
+    };
   }
 
   if (!allData) {
@@ -82,7 +92,6 @@ export default function Inputs() {
                 <th>First name</th>
                 <th>Last name</th>
                 <th>Attending</th>
-                <th>Edit</th>
                 <th>Delete</th>
               </tr>
             </thead>
@@ -93,10 +102,7 @@ export default function Inputs() {
                     <td>{item.firstName}</td>
                     <td>{item.lastName}</td>
                     <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>
-                      <button>Edit</button>
+                      <input type="checkbox" value={item.attending} />
                     </td>
                     <td>
                       <button>Delete</button>
