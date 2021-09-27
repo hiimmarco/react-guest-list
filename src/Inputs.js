@@ -24,6 +24,7 @@ export default function Inputs() {
   const [lastName, setLastName] = useState('');
   const [newUser, setNewUser] = useState('');
   const [deletedGuest, setDeletedGuest] = useState('');
+  const [isChecked, setIsChecked] = useState();
 
   // Fetch all data
   useEffect(() => {
@@ -62,6 +63,22 @@ export default function Inputs() {
       setNewUser(deletedUser);
     };
     deleteData();
+  }
+
+  // Create function to update the info on attending of seperate users
+  function handleAttending(id) {
+    const updateData = async () => {
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ attending: true }),
+      });
+      const updatedGuest = await response.json();
+      setNewUser(updatedGuest);
+    };
+    updateData();
   }
 
   if (!allData) {
@@ -104,7 +121,12 @@ export default function Inputs() {
                     <td>{item.firstName}</td>
                     <td>{item.lastName}</td>
                     <td>
-                      <input type="checkbox" value={item.attending} />
+                      <input
+                        type="checkbox"
+                        value="Attending"
+                        defaultChecked={item.attending}
+                        onChange={() => handleAttending(item.id)}
+                      />
                     </td>
                     <td>
                       <button
@@ -118,17 +140,6 @@ export default function Inputs() {
                   </tr>
                 );
               })}
-              {/* <td>Alfred</td>
-                <td>Ungerböck</td>
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>
-                  <button>Edit</button>
-                </td>
-                <td>
-                  <button>Delete</button>
-                </td> */}
             </tbody>
           </table>
         </div>
