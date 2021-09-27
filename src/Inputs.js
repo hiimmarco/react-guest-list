@@ -54,12 +54,14 @@ export default function Inputs() {
     pushData();
   }
 
+  // Create function to delete seperate users
   function handleDelete(id) {
     const deleteData = async () => {
       const response = await fetch(`${baseUrl}/${id}`, { method: 'DELETE' });
-      const deletedGuest = await response.json();
-      setDeletedGuest(deletedGuest);
+      const deletedUser = await response.json();
+      setNewUser(deletedUser);
     };
+    deleteData();
   }
 
   if (!allData) {
@@ -105,7 +107,13 @@ export default function Inputs() {
                       <input type="checkbox" value={item.attending} />
                     </td>
                     <td>
-                      <button>Delete</button>
+                      <button
+                        onClick={() => {
+                          handleDelete(item.id);
+                        }}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 );
