@@ -77,7 +77,7 @@ export default function Inputs() {
         <div>
           Here are the results in an unordered list.
           <table>
-            <tbody>
+            <thead>
               <tr>
                 <th>First name</th>
                 <th>Last name</th>
@@ -85,8 +85,26 @@ export default function Inputs() {
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
-              <tr>
-                <td>Alfred</td>
+            </thead>
+            <tbody>
+              {allData.map((item) => {
+                return (
+                  <tr key={item.id}>
+                    <td>{item.firstName}</td>
+                    <td>{item.lastName}</td>
+                    <td>
+                      <input type="checkbox" />
+                    </td>
+                    <td>
+                      <button>Edit</button>
+                    </td>
+                    <td>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                );
+              })}
+              {/* <td>Alfred</td>
                 <td>Ungerböck</td>
                 <td>
                   <input type="checkbox" />
@@ -96,8 +114,7 @@ export default function Inputs() {
                 </td>
                 <td>
                   <button>Delete</button>
-                </td>
-              </tr>
+                </td> */}
             </tbody>
           </table>
         </div>
