@@ -23,8 +23,6 @@ export default function Inputs() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [newUser, setNewUser] = useState('');
-  const [deletedGuest, setDeletedGuest] = useState('');
-  const [isChecked, setIsChecked] = useState();
 
   // Fetch all data
   useEffect(() => {
@@ -34,7 +32,7 @@ export default function Inputs() {
       setAllData(allGuests);
     };
     getData();
-  }, [newUser, deletedGuest]);
+  }, [newUser]);
 
   // Push new guest
   function handleSubmit(e) {
@@ -104,7 +102,6 @@ export default function Inputs() {
           <button>Attend</button>
         </form>
         <div>
-          Here are the results in an unordered list.
           <table>
             <thead>
               <tr>
