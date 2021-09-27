@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+/* Styling components and elements using emotion */
 const inputfields = css`
   display: flex;
   flex-direction: column;
@@ -13,9 +14,25 @@ const inputfields = css`
   }
 `;
 
+/* Set the base url of the api */
+const baseUrl = '';
+
 export default function Inputs() {
+  /* Declare all state variables and usestates */
+  const [allGuests, setAllGuests] = useState({});
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+
+  // Fetch all data
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch(`${baseUrl}/`);
+      const allData = await response.json();
+      setAllGuests(allData);
+    };
+    getData();
+  }, []);
+
   return (
     <div css={inputfields}>
       <label>
@@ -47,7 +64,7 @@ export default function Inputs() {
             <td>Alfred</td>
             <td>Ungerböck</td>
             <td>
-              <input type="checkbox"></input>
+              <input type="checkbox" />
             </td>
             <td>
               <button>Edit</button>
