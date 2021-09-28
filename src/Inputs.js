@@ -61,6 +61,7 @@ export default function Inputs() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [newUser, setNewUser] = useState('');
+  const [loading, setLoading] = useState(true);
 
   // Fetch all data
   useEffect(() => {
@@ -68,6 +69,7 @@ export default function Inputs() {
       const response = await fetch(`${baseUrl}/`);
       const allGuests = await response.json();
       setAllData(allGuests);
+      setLoading(false);
     };
     getData();
   }, [newUser]);
@@ -117,8 +119,9 @@ export default function Inputs() {
     updateData();
   }
 
-  if (!allData) {
-    return <div>loading</div>;
+  // Render a loading alert if data is not fully fetched from the server; render guest list and input form otherwise
+  if (loading) {
+    return <div>Loading</div>;
   } else {
     return (
       <div css={inputfields}>
