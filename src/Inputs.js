@@ -53,7 +53,7 @@ const form = css`
 `;
 
 /* Set the base url of the api */
-const baseUrl = 'http://localhost:5000';
+const baseUrl = 'https://mb-express-rest-guest-list-api.herokuapp.com';
 
 export default function Inputs() {
   /* Declare all state variables and usestates */
