@@ -14,6 +14,44 @@ const inputfields = css`
   }
 `;
 
+const table = css`
+  margin-top: 2rem;
+  width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const tablebutton = css`
+  text-transform: uppercase;
+  width: 80px;
+  height: 28px;
+  border: 1px solid red;
+  border-radius: 5px;
+  background-color: white;
+  color: red;
+  font-weight: regular;
+  cursor: pointer;
+`;
+
+const form = css`
+  input {
+    margin: 0px 0px 16px 16px;
+  }
+
+  button {
+    text-transform: uppercase;
+    width: 200px;
+    height: 48px;
+    border: none;
+    border-radius: 5px;
+    background-color: blueviolet;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+`;
+
 /* Set the base url of the api */
 const baseUrl = 'http://localhost:5000';
 
@@ -84,7 +122,7 @@ export default function Inputs() {
   } else {
     return (
       <div css={inputfields}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} css={form}>
           <label>
             First name:
             <input
@@ -92,6 +130,7 @@ export default function Inputs() {
               onChange={(event) => setFirstName(event.currentTarget.value)}
             />
           </label>
+          <br />
           <label>
             Last name:
             <input
@@ -99,9 +138,10 @@ export default function Inputs() {
               onChange={(event) => setLastName(event.currentTarget.value)}
             />
           </label>
+          <br />
           <button>Attend</button>
         </form>
-        <div>
+        <div css={table}>
           <table>
             <thead>
               <tr>
@@ -127,6 +167,7 @@ export default function Inputs() {
                     </td>
                     <td>
                       <button
+                        css={tablebutton}
                         onClick={() => {
                           handleDelete(item.id);
                         }}
